@@ -19,37 +19,34 @@ const Menu: FC<MenuProps> = ({}) => {
   const user = false
 
   return (
-    <div className="cursor-pointer">
-      {!open ? (
-        <Image
-          src="/open.png"
-          alt="logo"
-          width={20}
-          height={20}
-          onClick={() => setOpen(true)}
-        />
-      ) : (
-        <Image
-          src="/close.png"
-          alt="logo"
-          width={20}
-          height={20}
-          onClick={() => setOpen(false)}
-        />
-      )}
-      <div className="bg-red-500 text-white absolute left-0 top-24 w-full h-[calc(100vh-6rem)] flex flex-col gap-8 items-center justify-center text-3xl z-10">
-        {links.map((item) => (
-          <Link href={item.url} key={item.id}>
-            {item.title}
+    <div>
+      <Image
+        src={open ? '/close.png' : '/open.png'}
+        alt=""
+        width={20}
+        height={20}
+        onClick={() => setOpen(!open)}
+        className="cursor-pointer"
+      />
+      {open && (
+        <div className="bg-red-500 text-white absolute left-0 top-24 w-full h-[calc(100vh-6rem)] flex flex-col gap-8 items-center justify-center text-3xl z-10">
+          {links.map((item) => (
+            <Link href={item.url} key={item.id} onClick={() => setOpen(false)}>
+              {item.title}
+            </Link>
+          ))}
+
+          <Link
+            href={user ? '/orders' : 'login'}
+            onClick={() => setOpen(false)}
+          >
+            {user ? 'Orders' : 'Login'}
           </Link>
-        ))}
-        <Link href={user ? '/orders' : 'login'} onClick={() => setOpen(false)}>
-          {user ? 'Orders' : 'Login'}
-        </Link>
-        <Link href="/cart" onClick={() => setOpen(false)}>
-          <CartIcon />
-        </Link>
-      </div>
+          <Link href="/cart" onClick={() => setOpen(false)}>
+            <CartIcon />
+          </Link>
+        </div>
+      )}
     </div>
   )
 }
