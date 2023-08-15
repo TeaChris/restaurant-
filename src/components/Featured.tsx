@@ -1,10 +1,11 @@
-import { featuredProducts } from '@/data'
+import { getFeatured } from '@/utils/prisma-utils'
 import Image from 'next/image'
-import { FC } from 'react'
 
 interface FeaturedProps {}
 
-const Featured: FC<FeaturedProps> = ({}) => {
+const Featured = async ({}) => {
+  const featuredProducts = await getFeatured()
+
   return (
     <div className="w-screen overflow-x-scroll text-red-500">
       <div className="w-max flex">
