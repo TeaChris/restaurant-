@@ -1,10 +1,25 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { FC } from 'react'
+import { signIn, useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 interface pageProps {}
 
-const page: FC<pageProps> = ({}) => {
+const Login: FC<pageProps> = ({}) => {
+  const { data, status } = useSession()
+  const router = useRouter()
+
+  if (status === 'loading') {
+    return <p>Loading.....</p>
+  }
+
+  if (status === 'authenticated') {
+    router.push('/')
+  }
+
   return (
     <div className="p-4 h-[calc(100vh-6rem)] md:h-[calc(100vh-9rem)] flex items-center justify-center">
       {/* BOX */}
@@ -17,7 +32,10 @@ const page: FC<pageProps> = ({}) => {
         <div className="p-10 flex flex-col gap-8 md:w-1/2">
           <h1 className="font-bold text-xl xl:text-3xl">Welcome</h1>
           <p>Log into your account or create a new one using social buttons</p>
-          <button className="flex gap-4 p-4 ring-1 ring-orange-100 rounded-md">
+          <button
+            className="flex gap-4 p-4 ring-1 ring-orange-100 rounded-md"
+            onClick={() => signIn('google')}
+          >
             <Image
               src="/google.png"
               alt=""
@@ -50,4 +68,4 @@ const page: FC<pageProps> = ({}) => {
   )
 }
 
-export default page
+export default Login

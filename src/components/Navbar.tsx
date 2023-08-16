@@ -3,6 +3,7 @@ import Menu from './Menu'
 import Link from 'next/link'
 import Image from 'next/image'
 import CartIcon from './CartIcon'
+import UserLinks from './UserLinks'
 
 interface NavbarProps {}
 
@@ -27,11 +28,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
           <Image src="/phone.png" alt="" width={20} height={20} />
           <span>123 456 78</span>
         </div>
-        {!user ? (
-          <Link href="/login">Login</Link>
-        ) : (
-          <Link href="/orders">Orders</Link>
-        )}
+        <UserLinks />
         <CartIcon />
       </div>
     </div>
