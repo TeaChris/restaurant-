@@ -5,6 +5,9 @@ import { Inter } from 'next/font/google'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import AuthProvider from '@/components/AuthProvider'
+import QueryProvider from '@/components/QueryProvider'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,10 +25,17 @@ export default function RootLayout({
     <html lang="en" className="overflow-x-hidden">
       <body className={inter.className}>
         <AuthProvider>
-          <Notification />
-          <Navbar />
-          {children}
-          <Footer />
+          <QueryProvider>
+            <Notification />
+            <Navbar />
+            {children}
+            <Footer />
+            <ToastContainer
+              position="bottom-right"
+              theme="dark"
+              autoClose={3000}
+            />
+          </QueryProvider>
         </AuthProvider>
       </body>
     </html>
