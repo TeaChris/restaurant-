@@ -1,4 +1,4 @@
-import { FeaturedTypes, MenuTypes } from '@/types/types'
+import { FeaturedTypes, MenuTypes, ProductType } from '@/types/types'
 
 export async function getData(): Promise<MenuTypes> {
   const res = await fetch('http://localhost:3000/api/categories', {
@@ -29,6 +29,18 @@ export async function getCategory(category: string): Promise<FeaturedTypes> {
       cache: 'no-store',
     }
   )
+
+  if (!res.ok) {
+    throw new Error('Failed!')
+  }
+
+  return res.json()
+}
+
+export const getProducts = async (id: string) => {
+  const res = await fetch(`http://localhost:3000/api/products/${id}`, {
+    cache: 'no-store',
+  })
 
   if (!res.ok) {
     throw new Error('Failed!')
