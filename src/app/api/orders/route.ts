@@ -37,6 +37,35 @@ export const GET = async (request: NextRequest) => {
     )
   }
 }
-export const POST = () => {
-  return new NextResponse('Hello', { status: 200 })
+
+// create order
+export const POST = async (request: NextRequest) => {
+  const session = await getAuthSession()
+
+  if (session) {
+    try {
+      const body = await request.json()
+      if (session.user) {
+        const order = await prisma.order.create({
+          data: body,
+        })
+        return new NextResponse(JSON.stringify(order), { status: 201 })
+      }
+    } catch (error) {
+      console.log(error)
+      return new NextResponse(
+        JSON.stringify({ message: 'Something went wrong' }),
+        {
+          status: 500,
+        }
+      )
+    }
+  } else {
+    return new NextResponse(
+      JSON.stringify({ message: 'You are not authenticated' }),
+      {
+        status: 401,
+      }
+    )
+  }
 }
